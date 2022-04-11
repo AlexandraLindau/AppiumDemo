@@ -6,7 +6,7 @@ import lib.ui.ProductsPageObject;
 import org.junit.Test;
 import org.testng.Assert;
 
-import java.util.List;
+import java.util.Map;
 
 public class ProductsTests extends CoreTestCase {
 
@@ -43,17 +43,13 @@ public class ProductsTests extends CoreTestCase {
 
         ProductsPageObject productsPageObject = new ProductsPageObject(driver);
         productsPageObject.waitForHeaderElement();
-        List<String> expectedProductListAfterSorting = productsPageObject.reorderProductsByNameDesc();
+        Map<String, Double> expectedProductListAfterSorting = productsPageObject.reorderProductsByNameDesc();
 
         productsPageObject.openSortBy();
         productsPageObject.sortByNameDesc();
-        productsPageObject.scrollDownToSeeAllProducts();
 
-        Assert.assertEquals(productsPageObject.getProductNameByIndex(1), expectedProductListAfterSorting.get(0));
-        Assert.assertEquals(productsPageObject.getProductNameByIndex(2), expectedProductListAfterSorting.get(1));
-        Assert.assertEquals(productsPageObject.getProductNameByIndex(3), expectedProductListAfterSorting.get(2));
-        Assert.assertEquals(productsPageObject.getProductNameByIndex(4), expectedProductListAfterSorting.get(3));
-        Assert.assertEquals(productsPageObject.getProductNameByIndex(5), expectedProductListAfterSorting.get(4));
-        Assert.assertEquals(productsPageObject.getProductNameByIndex(6), expectedProductListAfterSorting.get(5));
+        Map<String, Double> actualProductListAfterSorting = productsPageObject.getListOfProducts();
+
+        Assert.assertEquals(actualProductListAfterSorting, expectedProductListAfterSorting);
     }
 }
