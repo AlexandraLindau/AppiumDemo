@@ -48,13 +48,11 @@ public class Platform {
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability("platformName", "Android");
         capabilities.setCapability("deviceName", "AndroidTestDevice");
-        capabilities.setCapability("platformVersion", "12.0");
+        capabilities.setCapability("platformVersion", "11.0");
         capabilities.setCapability("automationName", "Appium");
         capabilities.setCapability("appPackage", "com.saucelabs.mydemoapp.rn");
         File classpathRoot = new File(System.getProperty("user.dir"));
-        System.out.println(classpathRoot);
         File appDir = new File(classpathRoot, "src/test/apps/");
-        System.out.println(appDir);
         File app = new File(appDir, "Android-MyDemoAppRN.1.2.0.build-231.apk");
         capabilities.setCapability("app", app.getAbsolutePath());
         return capabilities;
