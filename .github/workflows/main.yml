@@ -15,7 +15,7 @@ jobs:
       with:
         java-version: 1.8
     - name: Install and Run Appium Server
-      working-directory: ./ci-scripts
+      working-directory: /ci-scripts
       run: |
         chmod +x RunAppiumServer.sh
         RunAppiumServer.sh
