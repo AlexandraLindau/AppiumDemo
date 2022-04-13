@@ -55,7 +55,7 @@ public class ProductsPageObject extends MainPageObject {
 
     public void openSortBy() {
         waitForElementAndClick(SORT_BUTTON, "Cannot click 'Sort by", 10);
-        waitForElementPresent(SORT_BY_WINDOW_HEADER, "'Sort by' is now  visible", 10);
+        waitForElementPresent(SORT_BY_WINDOW_HEADER, "'Sort by' is not  visible", 10);
     }
 
     public String getActiveSortingName() {

@@ -1,6 +1,8 @@
 package lib.ui;
 
-import io.appium.java_client.*;
+import io.appium.java_client.MobileBy;
+import io.appium.java_client.PerformsTouchActions;
+import io.appium.java_client.TouchAction;
 import io.appium.java_client.touch.WaitOptions;
 import io.appium.java_client.touch.offset.PointOption;
 import org.openqa.selenium.*;
@@ -40,6 +42,17 @@ public class MainPageObject {
     public WebElement waitForElementPresent(String locator, String errorMessage, long timeoutInSeconds) {
 
         By by = this.getLocatorByString(locator);
+
+        for (int i = 0; i < 10; i++) {
+            try {
+                System.out.println("Trying to find element: " + locator);
+                driver.findElement(by);
+                System.out.println("Element found: " + locator);
+                break;
+            } catch (Exception e) {
+                continue;
+            }
+        }
         WebDriverWait wait = new WebDriverWait(driver, timeoutInSeconds);
         wait.withMessage(errorMessage + "\n");
         return wait.until(ExpectedConditions.presenceOfElementLocated(by));
