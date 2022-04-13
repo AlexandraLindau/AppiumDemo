@@ -24,5 +24,9 @@ public class ProductDetailsPageObject extends MainPageObject {
         return element.getText();
     }
 
+    public void waitForHeaderElement() {
+        this.waitForElementPresent(SCREEN_HEADER, "Screen header is not visible", 60);
+    }
+
 }
 

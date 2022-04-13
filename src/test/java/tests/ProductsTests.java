@@ -3,8 +3,8 @@ package tests;
 import lib.CoreTestCase;
 import lib.ui.ProductDetailsPageObject;
 import lib.ui.ProductsPageObject;
+import org.junit.Assert;
 import org.junit.Test;
-import org.testng.Assert;
 
 import java.util.Map;
 
@@ -18,6 +18,7 @@ public class ProductsTests extends CoreTestCase {
         ProductsPageObject productsPageObject = new ProductsPageObject(driver);
         productsPageObject.waitForHeaderElement();
         ProductDetailsPageObject productDetailsPageObject = productsPageObject.openProductByName(product);
+        productDetailsPageObject.waitForHeaderElement();
 
         String actualProductName = productDetailsPageObject.getProductName();
 
@@ -47,6 +48,7 @@ public class ProductsTests extends CoreTestCase {
 
         productsPageObject.openSortBy();
         productsPageObject.sortByNameDesc();
+        productsPageObject.waitForHeaderElement();
 
         Map<String, Double> actualProductListAfterSorting = productsPageObject.getListOfProducts();
 
