@@ -33,11 +33,11 @@ jobs:
          ./ci-scripts/RunAppiumServer.sh
      
      - name: Set Platform Name if Android
-       if: ${{ github.event.inputs.PLATFORM = 'android' }}
+       if: ${{ github.event.inputs.PLATFORM == 'android' }}
        run: export PLATFORM=android
        
      - name: Set Platform Name if iOS
-       if: ${{ github.event.inputs.PLATFORM = 'ios' }}
+       if: ${{ github.event.inputs.PLATFORM == 'ios' }}
        run: export PLATFORM=ios
      
      - name: Run Appium Tests
