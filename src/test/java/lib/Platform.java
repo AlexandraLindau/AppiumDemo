@@ -12,6 +12,8 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import java.io.File;
 import java.net.URL;
 
+import static com.sun.tools.doclint.Entity.ne;
+
 public class Platform {
 
     private static final String PLATFORM_IOS = "ios";
@@ -55,7 +57,12 @@ public class Platform {
         capabilities.setCapability("platformVersion", "12.0");
         capabilities.setCapability("automationName", "Appium");
         capabilities.setCapability("appPackage", "com.saucelabs.mydemoapp.rn");
-        capabilities.setCapability("app", "/Users/alexandra/Desktop/AppiumDemo/src/test/apps/Android-MyDemoAppRN.1.2.0.build-231.apk");
+        File classpathRoot = new File(System.getProperty("user.dir"));
+        System.out.println(classpathRoot);
+        File appDir = new File(classpathRoot, "src/test/apps/");
+        System.out.println(appDir);
+        File app = new File(appDir, "Android-MyDemoAppRN.1.2.0.build-231.apk");
+        capabilities.setCapability("app", app.getAbsolutePath());
         return capabilities;
     }
 
