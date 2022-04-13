@@ -2,7 +2,6 @@
 out/
 *.iml
 .DS_Store
-apps/
 target/
 # Ignore Gradle project-specific cache directory
 .gradle
