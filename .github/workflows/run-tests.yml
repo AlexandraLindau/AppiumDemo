@@ -1,0 +1,46 @@
+name: Appium CI
+on:
+    workflow_dispatch:
+        inputs:
+          PLATFORM:
+             description: 'Platform name'
+             required: true
+             default: 'android'
+             type: choice
+             options:
+               - android
+               - ios
+
+jobs:
+   build:
+     runs-on: macos-latest # the machine type
+     steps:
+     
+     - uses: actions/checkout@v2 #checkout the code 
+     
+     - name: Set up JDK 1.8
+       uses: actions/setup-java@v1
+       with:
+         java-version: 1.8
+     
+     - name: Install and Run Appium Server
+       run: |
+         chmod +x ./ci-scripts/RunAppiumServer.sh # install and run appium server in the background
+         ./ci-scripts/RunAppiumServer.sh
+     
+     - name: Set Platform Name if Android
+       if: ${{ github.event.inputs.PLATFORM == 'android' }}
+       run: export PLATFORM=android
+       
+     - name: Set Platform Name if iOS
+       if: ${{ github.event.inputs.PLATFORM == 'ios' }}
+       run: export PLATFORM=ios
+       
+     - name: Set up Android Emulator and Run Appium Tests
+       uses: reactivecircus/android-emulator-runner@v2 # install and create the Emulator
+       with:
+         api-level: 30
+         target: default
+         arch: x86_64
+         profile: Nexus 6
+         script: mvn -Dtest=TestSuite test # running our test with info to check the results
