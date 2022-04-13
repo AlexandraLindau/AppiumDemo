@@ -17,7 +17,6 @@ jobs:
     - name: Install and Run Appium Server
       working-directory: ./ci-scripts
       run: |
-        ls -la
         chmod +x RunAppiumServer.sh
         RunAppiumServer.sh
     - name: Set Platform Name
