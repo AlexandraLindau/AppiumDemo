@@ -43,4 +43,6 @@ jobs:
          target: default
          arch: x86_64
          profile: Nexus 6
-         script: mvn -Dtest=TestSuite test # running our test with info to check the results
+         script: |
+          export PLATFORM=android
+          mvn -Dtest=TestSuite test
