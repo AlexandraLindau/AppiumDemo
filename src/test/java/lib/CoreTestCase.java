@@ -1,17 +1,22 @@
 package lib;
 
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.service.local.AppiumDriverLocalService;
 import io.appium.java_client.service.local.AppiumServiceBuilder;
 import io.appium.java_client.service.local.flags.GeneralServerFlag;
 import io.qameta.allure.Step;
 import junit.framework.TestCase;
+import org.openqa.selenium.DeviceRotation;
 import org.openqa.selenium.ScreenOrientation;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.time.Duration;
 import java.util.Properties;
+
+import static java.sql.DriverManager.getDriver;
 
 public class CoreTestCase extends TestCase {
 
@@ -40,8 +45,11 @@ public class CoreTestCase extends TestCase {
 
     @Step("Rotate screen to portrait mode")
     protected void rotateScreenPortrait() {
-        if (driver instanceof AppiumDriver) {
-            AppiumDriver driver = (AppiumDriver) this.driver;
+        if (driver instanceof AndroidDriver) {
+            AndroidDriver driver = (AndroidDriver) this.driver;
+            driver.rotate(ScreenOrientation.PORTRAIT);
+        } else if (driver instanceof IOSDriver) {
+            IOSDriver driver = (IOSDriver) this.driver;
             driver.rotate(ScreenOrientation.PORTRAIT);
         } else {
             System.out.println("Method rotateScreenPortrait() does nothing on platform "
@@ -51,8 +59,11 @@ public class CoreTestCase extends TestCase {
 
     @Step("Rotate screen to landscape mode")
     protected void rotateScreenLandscape() {
-        if (driver instanceof AppiumDriver) {
-            AppiumDriver driver = (AppiumDriver) this.driver;
+        if (driver instanceof AndroidDriver) {
+            AndroidDriver driver = (AndroidDriver) this.driver;
+            driver.rotate(ScreenOrientation.LANDSCAPE);
+        } else if (driver instanceof IOSDriver) {
+            IOSDriver driver = (IOSDriver) this.driver;
             driver.rotate(ScreenOrientation.LANDSCAPE);
         } else {
             System.out.println("Method rotateScreenLandscape() does nothing on platform "
@@ -62,9 +73,11 @@ public class CoreTestCase extends TestCase {
 
     @Step("Run app in background")
     protected void backgroundApp(int seconds) {
-
-        if (driver instanceof AppiumDriver) {
-            AppiumDriver driver = (AppiumDriver) this.driver;
+        if (driver instanceof AndroidDriver) {
+            AndroidDriver driver = (AndroidDriver) this.driver;
+            driver.runAppInBackground(Duration.ofSeconds(seconds));
+        } else if (driver instanceof IOSDriver) {
+            IOSDriver driver = (IOSDriver) this.driver;
             driver.runAppInBackground(Duration.ofSeconds(seconds));
         } else {
             System.out.println("Method backgroundApp() does nothing on platform "
