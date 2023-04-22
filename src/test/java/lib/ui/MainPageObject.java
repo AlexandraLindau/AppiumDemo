@@ -2,22 +2,18 @@ package lib.ui;
 
 import io.appium.java_client.AppiumBy;
 import io.appium.java_client.AppiumDriver;
-import io.appium.java_client.PerformsTouchActions;
-import io.appium.java_client.TouchAction;
-import io.appium.java_client.touch.WaitOptions;
-import io.appium.java_client.touch.offset.PointOption;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.PointerInput;
 import org.openqa.selenium.interactions.Sequence;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 import java.util.Collections;
 import java.util.function.Function;
 import java.util.regex.Pattern;
+
+import static lib.Platform.getPlatformVar;
 
 public class MainPageObject {
 
@@ -37,6 +33,8 @@ public class MainPageObject {
                 return By.xpath(locator);
             case "id":
                 return By.id(locator);
+            case "predicate":
+                return AppiumBy.iOSNsPredicateString(locator);
             case "accessibility":
                 return AppiumBy.accessibilityId(locator);
             case "css":
@@ -44,6 +42,37 @@ public class MainPageObject {
             default:
                 throw new IllegalArgumentException("Cannot get type of locator. Locator: " + locator_with_type);
         }
+    }
+
+    public String getText(WebElement element) throws Exception {
+        String textAttrName = null;
+        String platform = getPlatformVar();
+
+        switch (platform) {
+            case "iOS":
+                textAttrName = "label";
+                break;
+            case "Android":
+                textAttrName = "text";
+                break;
+            default: throw new Exception("Invalid platform: " + platform);
+        }
+
+        String text;
+
+        int count = 0;
+        int maxTries = 6;
+        while (true) {
+            try {
+                text = element.getAttribute(textAttrName);
+                break;
+            } catch (WebDriverException e) {
+                {
+                    if (++count == maxTries) throw e;
+                }
+            }
+        }
+        return text;
     }
 
     public WebElement waitForElementPresent(String locator, String errorMessage, long timeoutInSeconds) {

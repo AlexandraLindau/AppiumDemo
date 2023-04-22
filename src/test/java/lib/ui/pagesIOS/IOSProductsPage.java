@@ -9,20 +9,20 @@ public class IOSProductsPage extends ProductsPageObject {
     }
 
     static {
-        ITEM_BY_NAME_TPL = "xpath://android.widget.TextView[@text='{STRING}']/..";
-        ITEM_BY_INDEX_TPL = "xpath:(//android.widget.TextView[@content-desc='store item text'])[{INDEX}]";
-        OPEN_MENU_BUTTON = "accessibility:open menu";
+        ITEM_BY_NAME_TPL = "xpath://XCUIElementTypeOther[@name='store item']/..//XCUIElementTypeOther[@name='{STRING}']";
+        ITEM_BY_INDEX_TPL = "xpath:(//XCUIElementTypeOther[@name='store item'])[{INDEX}]";
+        OPEN_MENU_BUTTON = "xpath://XCUIElementTypeButton[@name='tab bar option menu']";
         SORT_BUTTON = "accessibility:sort button";
-        CART_BUTTON = "accessibility:cart badge";
-        SCREEN_HEADER = "accessibility:container header";
-        STORE_ITEMS = "xpath://android.view.ViewGroup[@content-desc='store item']";
-        ITEMS_NAMES = "xpath://android.widget.TextView[@content-desc='store item text']";
-        ITEMS_PRICES = "xpath://android.widget.TextView[@content-desc='store item price']";
-        FOOTER = "xpath://android.view.ViewGroup[@content-desc='products screen']/android.widget.ScrollView/android.view.ViewGroup/android.view.ViewGroup[4]";
+        CART_BUTTON = "xpath://XCUIElementTypeButton[@name='tab bar option cart']";
+        SCREEN_HEADER = "xpath://XCUIElementTypeOther[@name='container header']";
+        STORE_ITEMS = "xpath://XCUIElementTypeOther[@name='store item']";
+        ITEMS_NAMES = "xpath://XCUIElementTypeOther[@name='store item']/XCUIElementTypeOther[@index=0]";
+        ITEMS_PRICES = "xpath://XCUIElementTypeOther[@name='store item']/XCUIElementTypeOther[@index=1]";
+        FOOTER = "xpath:(//XCUIElementTypeOther[@name='© 2023 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy.'])[1]";
 
         /* 'Sort by' window */
-        SORT_BY_WINDOW_HEADER = "xpath://android.widget.TextView[@text='Sort by:']";
-        ACTIVE_SORTING = "xpath://android.view.ViewGroup[@content-desc='active option']/../android.widget.TextView";
+        SORT_BY_WINDOW_HEADER = "predicate:label == 'Sort by:' AND name == 'Sort by:' AND value == 'Sort by:'";
+        ACTIVE_SORTING = "xpath://XCUIElementTypeOther[@name='active option']/..//XCUIElementTypeOther[@index=1]/XCUIElementTypeStaticText";
         NAME_ASC = "accessibility:nameAsc";
         NAME_DESC = "accessibility:nameDesc";
         PRICE_ASC = "accessibility:priceAsc";

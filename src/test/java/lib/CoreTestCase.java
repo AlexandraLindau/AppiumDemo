@@ -8,15 +8,12 @@ import io.appium.java_client.service.local.AppiumServiceBuilder;
 import io.appium.java_client.service.local.flags.GeneralServerFlag;
 import io.qameta.allure.Step;
 import junit.framework.TestCase;
-import org.openqa.selenium.DeviceRotation;
 import org.openqa.selenium.ScreenOrientation;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.time.Duration;
 import java.util.Properties;
-
-import static java.sql.DriverManager.getDriver;
 
 public class CoreTestCase extends TestCase {
 

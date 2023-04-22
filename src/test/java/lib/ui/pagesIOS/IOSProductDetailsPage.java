@@ -10,11 +10,9 @@ public class IOSProductDetailsPage extends ProductDetailsPageObject {
     }
 
     static {
-        SCREEN_HEADER = "xpath://android.view.ViewGroup[@content-desc='container header']/android.widget.TextView";
+        SCREEN_HEADER = "accessibility:container header";
         PRODUCT_PRICE = "accessibility:product price";
-        ITEMS_NAMES = "xpath://android.widget.TextView[@content-desc='store item text']";
-        ITEMS_PRICES = "xpath://android.widget.TextView[@content-desc='store item price']";
-        AMOUNT_COUNTER = "xpath://android.view.ViewGroup[@content-desc='counter amount']/android.widget.TextView";
+        AMOUNT_COUNTER = "xpath://XCUIElementTypeOther[@name='counter amount']/XCUIElementTypeStaticText";
         COUNTER_PLUS_BUTTON = "accessibility:counter plus button";
         COUNTER_MINUS_BUTTON = "accessibility:counter minus button";
         ADD_TO_CART_BUTTON = "accessibility:Add To Cart button";

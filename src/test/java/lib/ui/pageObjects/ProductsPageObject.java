@@ -14,24 +14,24 @@ public class ProductsPageObject extends lib.ui.MainPageObject {
     }
 
     protected static String
-    ITEM_BY_NAME_TPL,
-    ITEM_BY_INDEX_TPL,
-    OPEN_MENU_BUTTON,
-    SORT_BUTTON,
-    CART_BUTTON,
-    SCREEN_HEADER,
-    STORE_ITEMS,
-    ITEMS_NAMES,
-    ITEMS_PRICES,
-    FOOTER,
+            ITEM_BY_NAME_TPL,
+            ITEM_BY_INDEX_TPL,
+            OPEN_MENU_BUTTON,
+            SORT_BUTTON,
+            CART_BUTTON,
+            SCREEN_HEADER,
+            STORE_ITEMS,
+            ITEMS_NAMES,
+            ITEMS_PRICES,
+            FOOTER,
 
     /* 'Sort by' window */
     SORT_BY_WINDOW_HEADER,
-    ACTIVE_SORTING,
-    NAME_ASC,
-    NAME_DESC,
-    PRICE_ASC,
-    PRICE_DESC;
+            ACTIVE_SORTING,
+            NAME_ASC,
+            NAME_DESC,
+            PRICE_ASC,
+            PRICE_DESC;
     /* 'Sort by' window */
 
 
@@ -39,7 +39,7 @@ public class ProductsPageObject extends lib.ui.MainPageObject {
 
     public ProductDetailsPageObject openProductByName(String name) throws Exception {
         String locator = ITEM_BY_NAME_TPL.replace("{STRING}", name);
-        scrollToFindElement(true, locator, 10);
+        scrollToFindElement(true, locator, 5);
         waitForElementAndClick(locator, "Cannot click element with locator: " + locator, 5);
         return ProductDetailsPOFactory.get(driver);
     }
@@ -76,7 +76,7 @@ public class ProductsPageObject extends lib.ui.MainPageObject {
         }
     }
 
-    public Map<String, Double> getListOfProducts() {
+    public Map<String, Double> getListOfProducts() throws Exception {
 
         By products = getLocatorByString(ITEMS_NAMES);
         By prices = getLocatorByString(ITEMS_PRICES);
@@ -94,22 +94,29 @@ public class ProductsPageObject extends lib.ui.MainPageObject {
             List<WebElement> listOfProducts = driver.findElements(products);
             List<WebElement> listOfPrices = driver.findElements(prices);
 
-                for (int i = 0; i < listOfProducts.size(); i++) {
-                    if (listOfProducts.size() == listOfPrices.size()) {
-                        allProducts.put(listOfProducts.get(i).getText(),
-                                Double.parseDouble(listOfPrices.get(i).getText().replace("$", "")));
-                    } else {
-                        break;
-                    }
-                }
-
-                scrollDown();
-
-                endOfPage = previousPageSource.equals(driver.getPageSource());
-                if (!endOfPage) {
-                    scrollCount = scrollCount + 1;
+            for (int i = 0; i < listOfProducts.size(); i++) {
+                if (listOfProducts.size() == listOfPrices.size()) {
+                    allProducts.put(getText(listOfProducts.get(i)),
+                            Double.parseDouble(getText(listOfPrices.get(i)).replaceAll("[^\\d.]", "")));
+                } else {
+                    break;
                 }
             }
+
+            scrollDown();
+
+            int maxTries = 2;
+            for (int i = 0; i < maxTries; i++) {
+                endOfPage = previousPageSource.equals(driver.getPageSource());
+                if (endOfPage) {
+                    break;
+                }
+            }
+
+            if (!endOfPage) {
+                scrollCount = scrollCount + 1;
+            }
+        }
 
         for (int i = 0; i < scrollCount; i++) {
             scrollUp();
@@ -121,7 +128,7 @@ public class ProductsPageObject extends lib.ui.MainPageObject {
         return allProducts;
     }
 
-    public Map<String, Double> reorderProductsByNameDesc() {
+    public Map<String, Double> reorderProductsByNameDesc() throws Exception {
         Map<String, Double> productsBefore = new HashMap<>(getListOfProducts());
         Map<String, Double> productsAfter = new LinkedHashMap<>();
         List<String> list = new ArrayList<>(productsBefore.keySet());

@@ -12,36 +12,36 @@ import java.util.Map;
 
 public class ProductsTests extends CoreTestCase {
 
-//    @Test
-//    public void testOpenProduct() throws Exception {
-//
-//        String product = "Sauce Labs Fleece Jacket";
-//
-//        ProductsPageObject productsPage = ProductsPOFactory.get(driver);
-//        productsPage.waitForHeaderElement();
-//        productsPage.openProductByName(product);
-//
-//        ProductDetailsPageObject productDetailsPage = ProductDetailsPOFactory.get(driver);
-//        productDetailsPage.waitForHeaderElement();
-//
-//        String actualProductName = productDetailsPage.getProductName();
-//
-//        Assert.assertEquals(actualProductName, product);
-//    }
-//
-//    @Test
-//    public void testDefaultSorting() throws Exception {
-//
-//        String expectedDefaultSorting = "Name - Ascending";
-//
-//        ProductsPageObject productsPage = ProductsPOFactory.get(driver);
-//        productsPage.waitForHeaderElement();
-//        productsPage.openSortBy();
-//
-//        String actualDefaultSorting = productsPage.getActiveSortingName();
-//
-//        Assert.assertEquals(actualDefaultSorting, expectedDefaultSorting);
-//    }
+    @Test
+    public void testOpenProduct() throws Exception {
+
+        String product = "Sauce Labs Fleece Jacket";
+
+        ProductsPageObject productsPage = ProductsPOFactory.get(driver);
+        productsPage.waitForHeaderElement();
+        productsPage.openProductByName(product);
+
+        ProductDetailsPageObject productDetailsPage = ProductDetailsPOFactory.get(driver);
+        productDetailsPage.waitForHeaderElement();
+
+        String actualProductName = productDetailsPage.getProductName();
+
+        Assert.assertEquals(actualProductName, product);
+    }
+
+    @Test
+    public void testDefaultSorting() throws Exception {
+
+        String expectedDefaultSorting = "Name - Ascending";
+
+        ProductsPageObject productsPage = ProductsPOFactory.get(driver);
+        productsPage.waitForHeaderElement();
+        productsPage.openSortBy();
+
+        String actualDefaultSorting = productsPage.getActiveSortingName();
+
+        Assert.assertEquals(actualDefaultSorting, expectedDefaultSorting);
+    }
 
     @Test
     public void testSortProductsByNameDesc() throws Exception {

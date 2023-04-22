@@ -14,8 +14,6 @@ public class ProductDetailsPageObject extends MainPageObject {
     protected static String
             SCREEN_HEADER,
             PRODUCT_PRICE,
-            ITEMS_NAMES,
-            ITEMS_PRICES,
             AMOUNT_COUNTER,
             COUNTER_PLUS_BUTTON,
             COUNTER_MINUS_BUTTON,
