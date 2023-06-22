@@ -1,16 +1,16 @@
 package tests;
 
-import lib.CoreTestCase;
+import lib.BaseTestCase;
 import lib.ui.factories.ProductDetailsPOFactory;
 import lib.ui.factories.ProductsPOFactory;
 import lib.ui.pageObjects.ProductDetailsPageObject;
 import lib.ui.pageObjects.ProductsPageObject;
-import org.junit.Assert;
-import org.junit.Test;
+import org.testng.Assert;
+import org.testng.annotations.Test;
 
 import java.util.Map;
 
-public class ProductsTests extends CoreTestCase {
+public class ProductsTests extends BaseTestCase {
 
     @Test
     public void testOpenProduct() throws Exception {

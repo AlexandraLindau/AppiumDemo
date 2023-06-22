@@ -9,9 +9,9 @@ import lib.ui.pagesIOS.IOSProductDetailsPage;
 public class ProductDetailsPOFactory {
 
     public static ProductDetailsPageObject get(AppiumDriver driver) throws Exception {
-        if(Platform.getInstance().isAndroid()) {
+        if(Platform.isAndroid()) {
             return new AndroidProductDetailsPage(driver);
-        } else if (Platform.getInstance().isIOS()) {
+        } else if (Platform.isIOS()) {
             return new IOSProductDetailsPage(driver);
         } else {
             throw new Exception("Invalid platform " + Platform.getPlatformVar());
