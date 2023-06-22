@@ -3,7 +3,7 @@ on:
   workflow_dispatch
 
 env: 
- PLATFORM: android
+ PLATFORM: Android
 
 jobs:
    build:
@@ -32,4 +32,4 @@ jobs:
          profile: Nexus 6
          disable-animations: false
          force-avd-creation: false
-         script: export PLATFORM=Android; gradle testAndroid
+         script: gradle testAndroid
