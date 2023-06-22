@@ -6,41 +6,36 @@ import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.service.local.AppiumDriverLocalService;
 import io.appium.java_client.service.local.AppiumServiceBuilder;
 import io.appium.java_client.service.local.flags.GeneralServerFlag;
-import io.qameta.allure.Step;
-import junit.framework.TestCase;
 import org.openqa.selenium.ScreenOrientation;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Parameters;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.time.Duration;
 import java.util.Properties;
 
-public class CoreTestCase extends TestCase {
+public class BaseTestCase {
 
-    private static AppiumDriverLocalService server;
     protected AppiumDriver driver;
     protected Platform Platform;
 
 
-    @Override
-    public void setUp() throws Exception {
-
-        super.setUp();
-        driver = Platform.getInstance().getDriver();
-//        this.startServer();
-//        this.createAllurePropertyFile();
-//        this.rotateScreenPortrait();
+    @Parameters({"deviceName", "platformVersion", "emulator", "udid", "mjpegServerPort"})
+    @BeforeMethod
+    public void beforeMethod(String deviceName, String platformVersion, boolean emulator,
+                             String udid, String mjpegServerPort) throws Exception {
+        driver = Platform.getInstance().getDriver(deviceName, platformVersion, emulator, udid, mjpegServerPort);
     }
 
 
-    @Override
-    public void tearDown() throws Exception {
-
-        super.tearDown();
+    @AfterMethod
+    public void tearDown() {
         driver.quit();
     }
 
-    @Step("Rotate screen to portrait mode")
+   //Rotate screen to portrait mode
     protected void rotateScreenPortrait() {
         if (driver instanceof AndroidDriver) {
             AndroidDriver driver = (AndroidDriver) this.driver;
@@ -54,7 +49,7 @@ public class CoreTestCase extends TestCase {
         }
     }
 
-    @Step("Rotate screen to landscape mode")
+    //Rotate screen to landscape mode
     protected void rotateScreenLandscape() {
         if (driver instanceof AndroidDriver) {
             AndroidDriver driver = (AndroidDriver) this.driver;
@@ -68,7 +63,7 @@ public class CoreTestCase extends TestCase {
         }
     }
 
-    @Step("Run app in background")
+    //Run app in background
     protected void backgroundApp(int seconds) {
         if (driver instanceof AndroidDriver) {
             AndroidDriver driver = (AndroidDriver) this.driver;
@@ -104,12 +99,4 @@ public class CoreTestCase extends TestCase {
                 .withArgument(GeneralServerFlag.RELAXED_SECURITY));
     }
 
-//    public void startServer() {
-//        server = getAppiumServer();
-//        if (!server.isRunning()) {
-//            server.start();
-//            System.out.println("Appium server started.");
-//        } else
-//            System.out.println("Appium server is already running.");
-//    }
 }

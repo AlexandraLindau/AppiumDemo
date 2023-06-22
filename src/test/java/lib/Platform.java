@@ -26,31 +26,36 @@ public class Platform {
         } return instance;
     }
 
-    public AppiumDriver getDriver() throws Exception {
+    public AppiumDriver getDriver(String deviceName, String platformVersion, boolean emulator,
+                                  String udid, String mjpegServerPort) throws Exception {
         URL URL = new URL(APPIUM_URL);
-        if (this.isAndroid()) {
-            return new AndroidDriver(URL, this.getAndroidDesiredCapabilities());
-        } else if (this.isIOS()) {
-            return new IOSDriver(URL, this.getIOSDesiredCapabilities());
+        if (isAndroid()) {
+            return new AndroidDriver(URL, this.getAndroidDesiredCapabilities(deviceName, platformVersion, emulator, udid, mjpegServerPort));
+        } else if (isIOS()) {
+            return new IOSDriver(URL, this.getIOSDesiredCapabilities(deviceName, platformVersion, udid, mjpegServerPort));
         } else {
-            throw new Exception("Cannot detect type of driver. Platform value: " + this.getPlatformVar());
+            throw new Exception("Cannot detect type of driver. Platform value: " + getPlatformVar());
         }
     }
 
-    public boolean isAndroid() {
+    public static boolean isAndroid() {
         return isPlatform(PLATFORM_ANDROID);
     }
 
-    public boolean isIOS() {
+    public static boolean isIOS() {
         return isPlatform(PLATFORM_IOS);
     }
 
 
-    private DesiredCapabilities getAndroidDesiredCapabilities() {
+    private DesiredCapabilities getAndroidDesiredCapabilities(String deviceName, String platformVersion, boolean emulator,
+                                                              String udid, String mjpegServerPort) {
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability("platformName", "Android");
-        capabilities.setCapability("deviceName", "AndroidTestDevice");
-        capabilities.setCapability("platformVersion", "11.0");
+        capabilities.setCapability("platformVersion", platformVersion);
+        capabilities.setCapability("emulator", emulator);
+        capabilities.setCapability("deviceName", deviceName);
+        capabilities.setCapability("udid", udid);
+        capabilities.setCapability("mjpegServerPort", mjpegServerPort);
         capabilities.setCapability("automationName", "UIAutomator2");
         capabilities.setCapability("appPackage", "com.saucelabs.mydemoapp.rn");
         File app = new File(appDir, "Android-MyDemoAppRN.1.3.0.build-244.apk");
@@ -58,11 +63,14 @@ public class Platform {
         return capabilities;
     }
 
-    private DesiredCapabilities getIOSDesiredCapabilities() {
+    private DesiredCapabilities getIOSDesiredCapabilities(String deviceName, String platformVersion,
+                                                          String udid, String mjpegServerPort) {
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability("platformName", "iOS");
-        capabilities.setCapability("deviceName", "iPhone 14");
-        capabilities.setCapability("platformVersion", "16.2");
+        capabilities.setCapability("platformVersion", platformVersion);
+        capabilities.setCapability("deviceName", deviceName);
+        capabilities.setCapability("udid", udid);
+        capabilities.setCapability("mjpegServerPort", mjpegServerPort);
         capabilities.setCapability("automationName", "XCUITest");
         capabilities.setCapability("app", "/Users/alexandra/Desktop/JavaAppiumAutomation2/apks/Wikipedia.app");
         File app = new File(appDir, "MyRNDemoApp.app");
@@ -71,8 +79,8 @@ public class Platform {
     }
 
 
-    private boolean isPlatform(String my_platform) {
-        String platform = this.getPlatformVar();
+    private static boolean isPlatform(String my_platform) {
+        String platform = getPlatformVar();
         return my_platform.equals(platform);
     }
 
