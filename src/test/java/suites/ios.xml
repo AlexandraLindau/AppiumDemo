@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+
+<suite name="Suite">
+    <test name="iOS">
+        <parameter name="platformName" value="iOS"/>
+        <parameter name="platformVersion" value="15.5"/>
+        <parameter name="emulator" value="true"/>
+        <parameter name="deviceName" value="iPhone 13 mini"/>
+        <parameter name="udid" value="1EC57CC0-51A5-46DF-8E49-7D94FF815422"/>
+        <parameter name="appiumPort" value="4723"/>
+        <parameter name="mjpegServerPort" value="9100"/>
+
+        <classes>
+            <class name="tests.ProductsTests">
+            </class>
+        </classes>
+    </test>
+</suite>
